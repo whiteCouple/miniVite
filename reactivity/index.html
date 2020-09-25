@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue3.0响应式原理</title>
+</head>
+<body>
+    <div id="app"></div>
+    <button id="button">点我年龄加1</button>
+    <script src="./main.js"></script>
+    <script>
+        const app = document.getElementById('app')
+        const button = document.getElementById('button')
+
+        const o = {
+            name: 'kiko',
+            age: 2
+        }
+        
+        let obj = reactive(o)
+        let double = computed(() => obj.age*2)
+        effect(() => {
+            // 数据的修改，会通知这个函数的执行
+            app.innerHTML = `
+                <h1>${obj.name}今年${obj.age}了，<br>计算属性结果为${double.value}</h1>
+            `
+        }) 
+
+        button.addEventListener('click', () => {
+            obj.age++
+        }, false)
+    </script>
+</body>
+</html>
